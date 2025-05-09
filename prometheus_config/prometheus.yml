@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s  # How often to scrape targets
+  evaluation_interval: 15s  # How often to evaluate alerting rules
+
+scrape_configs:
+  # Monitor Prometheus itself
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Monitor Docker containers (via cAdvisor)
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  # Monitor the host machine (via Node Exporter)
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+
+  # Monitor other services (example: a web app)
+  - job_name: "whatsapp-api"
+    static_configs:
+      - targets: ["gtbank-whatsapp-test:3000"]  # Replace with your app’s metrics endpoint
+
+# Optional: Alerting rules (uncomment if needed)
+# rule_files:
+#   - 'alert.rules.yml'
